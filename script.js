@@ -33,19 +33,19 @@ username.onchange=function () {
     if(username.value.length>=3){
       username.style.border='2px solid seagreen'
       
-    smaller[0].innerHTML=""
+    smaller[2].innerHTML=""
       userInfo.username=username.value
     }
     else {
       username.style.border='2px solid red'
-      smaller[0].style.color='red'
-      smaller[0].innerHTML='Nom doit avoir au minimum 3 caractères '
+      smaller[2].style.color='red'
+      smaller[2].innerHTML='Nom doit avoir au minimum 3 caractères '
     }
   }
   else {
     username.style.border='2px solid red'
-    smaller[0].style.color='red'
-    smaller[0].innerHTML='Nom ne peut pas être vide'
+    smaller[2].style.color='red'
+    smaller[2].innerHTML='Nom ne peut pas être vide'
   }
   
 }
@@ -53,24 +53,15 @@ password.onchange=function (param) {
   if (password.value!='') {
     if(password.value.length >=8){
       password.style.border='2px solid seagreen'
-      smaller[3].innerHTML=''
-      userInfo.password=password.value
-      if(password.value==password2.value){
-      password2.style.border='2px solid seagreen'
       smaller[4].innerHTML=''
-      userInfo.password2=password2.value
-    }
-    else {
-      password2.style.border='2px solid red'
-      smaller[4].style.color='red'
-      smaller[4].innerHTML="les mots de passes ne se correspondent  pas"
-    }
+      userInfo.password=password.value
+
 
     }
     else {
       password.style.border='2px solid red'
-      smaller[3].style.color='red'
-      smaller[3].innerHTML="Mot de passe doit avoir minimum 8 caractères "
+      smaller[4].style.color='red'
+      smaller[4].innerHTML="Mot de passe doit avoir minimum 8 caractères "
     }
   }
   else {
@@ -84,19 +75,19 @@ prenom.onchange=function (param) {
     if(prenom.value!=''){
     if(prenom.value.length>=3){
       prenom.style.border='2px solid seagreen'
-    smaller[2].innerHTML=""
+    smaller[3].innerHTML=""
       userInfo.prenom=prenom.value
     }
     else {
-      smaller[2].style.color='red'
-      smaller[2].innerHTML='Prénom doit avoir au minimum 3 caractères '
+      smaller[3].style.color='red'
+      smaller[3].innerHTML='Prénom doit avoir au minimum 3 caractères '
       prenom.style.border='2px solid red'
     }
   }
   else {
     prenom.style.border='2px solid red'
-    smaller[2].style.color='red'
-    smaller[2].innerHTML='Prénom ne peut pas être vide'
+    smaller[3].style.color='red'
+    smaller[3].innerHTML='Prénom ne peut pas être vide'
   }
   
   
@@ -165,19 +156,19 @@ password2.onchange=function () {
   if (password2.value!='') {
     if(password.value==password2.value){
       password2.style.border='2px solid seagreen'
-      smaller[4].innerHTML=''
+      smaller[5].innerHTML=''
       userInfo.password2=password2.value
     }
     else {
       password2.style.border='2px solid red'
-      smaller[4].style.color='red'
-      smaller[4].innerHTML="les mots de passes ne se correspondent  pas"
+      smaller[5].style.color='red'
+      smaller[5].innerHTML="les mots de passes ne se correspondent  pas"
     }
   }
   else {
     password2.style.border='2px solid red'
-    smaller[4].style.color='red'
-    smaller[4].innerHTML="Mot de passe ne peut pas être vide"
+    smaller[5].style.color='red'
+    smaller[5].innerHTML="Mot de passe ne peut pas être vide"
   }
   
   
