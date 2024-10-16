@@ -2693,7 +2693,7 @@ function sendMailLoan(){
   if(cookies!=null){
       const users = extrUser(contenu)
 
-      if(users.tot_amount>0 && users.tot_amount>1){
+      if(users.tot_amount==0){
         updatedata(contenu,upfunc,dbs,refr)
   try {
    
